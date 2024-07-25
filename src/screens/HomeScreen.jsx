@@ -4,10 +4,11 @@ import Header from "../components/Header";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Category from "../components/Category";
+import ProductCard from "../components/ProductCard";
 
 const categoryData = ["Trending Now", "All", "New", "Men", "Women", "Kids"];
 const HomeScreen = () => {
-  const [selectedCateg, setSelectedCateg] = useState(null)
+  const [selectedCateg, setSelectedCateg] = useState(null);
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -24,13 +25,24 @@ const HomeScreen = () => {
       <FlatList
         data={categoryData}
         renderItem={({ item }) => (
-          <Category item={item}  selectedCateg={selectedCateg} setSelectedCateg={setSelectedCateg} />
+          <Category
+            item={item}
+            selectedCateg={selectedCateg}
+            setSelectedCateg={setSelectedCateg}
+          />
         )}
         keyExtractor={(item) => item}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
       />
       {/* <Category/> */}
+
+      {/* Product  List */}
+      <View style={{ flexDirection: "row" }}>
+        <ProductCard />
+        <ProductCard />
+      </View>
+      <FlatList data={[1, 2, 3, 4, 5, 6]} renderItem={ProductCard} numColumns={2} />
     </View>
   );
 };
@@ -39,7 +51,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     padding: 20,
     backgroundColor: "#f0e2e2",
   },
