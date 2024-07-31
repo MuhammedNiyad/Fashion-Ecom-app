@@ -8,6 +8,8 @@ import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ProductDetails from "./src/screens/ProductDetails";
 
 const Hello = () => {
   return (
@@ -18,6 +20,18 @@ const Hello = () => {
 };
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const MyHomeStack = () =>{
+  return(
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name="HOME" component={HomeScreen}/>
+      <Stack.Screen name="PRODUCT_DETAILS" component={ProductDetails}/>
+    </Stack.Navigator>
+  )
+}
+
+
 export default function App() {
   return (
     <SafeAreaProvider>
@@ -30,8 +44,8 @@ export default function App() {
           }}
         >
           <Tab.Screen
-            name="HOME"
-            component={HomeScreen}
+            name="HOME STACK"
+            component={MyHomeStack}
             options={{
               tabBarIcon: ({ size, focused, color }) => {
                 return <Entypo name={"home"} size={size} color={color} />;
