@@ -10,39 +10,51 @@ const categoryData = ["Trending Now", "All", "New", "Men", "Women", "Kids"];
 const HomeScreen = () => {
   const [selectedCateg, setSelectedCateg] = useState(null);
   const insets = useSafeAreaInsets();
+  const [isLiked, setIsLiked] = useState(false)
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <Header />
-      <Text style={styles.matchTxt}>Match Your Style</Text>
-      {/* Input container */}
-      <View style={styles.inputContainer}>
-        <View style={styles.iconContainer}>
-          <Fontisto name="search" size={26} color="#C0C0C0" />
-        </View>
-        <TextInput style={styles.textInput} placeholder="Search" />
-      </View>
-      {/* category section */}
-      <FlatList
-        data={categoryData}
-        renderItem={({ item }) => (
-          <Category
-            item={item}
-            selectedCateg={selectedCateg}
-            setSelectedCateg={setSelectedCateg}
-          />
-        )}
-        keyExtractor={(item) => item}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-      />
-      {/* <Category/> */}
 
       {/* Product  List */}
-      <View style={{ flexDirection: "row" }}>
+      {/* <View style={{ flexDirection: "row" }}>
         <ProductCard />
         <ProductCard />
-      </View>
-      <FlatList data={[1, 2, 3, 4, 5, 6]} renderItem={ProductCard} numColumns={2} />
+      </View> */}
+      <FlatList
+        data={[1, 2, 3, 4, 5, 6]}
+        renderItem={({ item, index }) => (
+          <ProductCard item={item} isLiked={isLiked} setIsLiked={setIsLiked} />
+        )}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom:50}}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.matchTxt}>Match Your Style</Text>
+            {/* Input container */}
+            <View style={styles.inputContainer}>
+              <View style={styles.iconContainer}>
+                <Fontisto name="search" size={26} color="#C0C0C0" />
+              </View>
+              <TextInput style={styles.textInput} placeholder="Search" />
+            </View>
+            {/* category section */}
+            <FlatList
+              data={categoryData}
+              renderItem={({ item }) => (
+                <Category
+                  item={item}
+                  selectedCateg={selectedCateg}
+                  setSelectedCateg={setSelectedCateg}
+                />
+              )}
+              keyExtractor={(item) => item}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+            />
+          </>
+        }
+        numColumns={2}
+      />
     </View>
   );
 };
