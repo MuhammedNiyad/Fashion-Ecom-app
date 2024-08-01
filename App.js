@@ -23,12 +23,15 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const MyHomeStack = () =>{
-  return(
-    <Stack.Navigator screenOptions={{headerShown:false}}>
-      <Stack.Screen name="HOME" component={HomeScreen}/>
-      <Stack.Screen name="PRODUCT_DETAILS" component={ProductDetails}/>
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="PRODUCT_DETAILS"
+    >
+      <Stack.Screen name="HOME" component={HomeScreen} />
+      <Stack.Screen name="PRODUCT_DETAILS" component={ProductDetails} />
     </Stack.Navigator>
-  )
+  );
 }
 
 
