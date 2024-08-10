@@ -5,7 +5,9 @@ import { useNavigation } from "@react-navigation/native";
 
 const ProductCard = ({item,handleLiked}) => {
   const navigation = useNavigation();
-	//   const [isLiked, setIsLiked] = useState(false);
+  //   const [isLiked, setIsLiked] = useState(false);
+
+  
   return (
     <TouchableOpacity style={styles.container} onPress={()=>navigation.navigate("PRODUCT_DETAILS",{item})}>
       <Image

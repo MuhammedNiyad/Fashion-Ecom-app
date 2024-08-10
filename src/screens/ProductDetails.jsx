@@ -1,34 +1,70 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import Header from "../components/Header";
+import { useRoute } from "@react-navigation/native";
 
-const imageUrl =
-  "https://res.cloudinary.com/dlc5c1ycl/image/upload/v1710567613/cwlk21f74nd9iamrlzkh.png";
-
-const sizes = ["S", "M", "L", "XL", "XXL"];
+const sizes = ["S", "M", "L", "XL",];
+const colors = [
+  "#91A1B0",
+  "#B11D1D",
+  "#1F44A3",
+  "#9F632A",
+  "#1D752B",
+  "#000000",
+];
 
 const ProductDetails = () => {
-    const [selectedSize,setSelectedSize] = useState(null)
+  const itemData = useRoute().params.item;
+  
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(colors[0]);
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <Header />
       </View>
-      <Image source={{ uri: imageUrl }} style={styles.coverImage} />
+      <Image source={{ uri: itemData.image }} style={styles.coverImage} />
       {/* Content Container */}
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>Winter coat</Text>
-        <Text style={[styles.title, styles.price]}>$99.5</Text>
+        <Text style={styles.title}>{itemData.title}</Text>
+        <Text style={[styles.title, styles.price]}>${itemData.price}</Text>
       </View>
       {/* size container */}
       <Text style={[styles.title, styles.sizeText]}>Size</Text>
       <View style={styles.sizeContainer}>
-        {sizes.map((size,ind) => (
-          <TouchableOpacity key={ind} style={styles.sizeValueContainre} onPress={()=>setSelectedSize(size)}>
-            <Text style={[styles.sizeValue,selectedSize === size && {color:"#E55B5B"}]}>{size}</Text>
+        {sizes.map((size, ind) => (
+          <TouchableOpacity
+            key={ind}
+            style={styles.sizeValueContainre}
+            onPress={() => setSelectedSize(size)}
+          >
+            <Text
+              style={[
+                styles.sizeValue,
+                selectedSize === size && { color: "#E55B5B" },
+              ]}
+            >
+              {size}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
+      <Text style={[styles.title, styles.colorText]}>Colors</Text>
+      <View style={styles.colorContainer}>
+        {colors.map((color, ind) => {
+          return (
+            <TouchableOpacity style={[styles.circleBorder, color === selectedColor&&{borderColor:color, borderWidth:2}]} key={ind} onPress={()=>setSelectedColor(color)}>
+              <View style={[styles.circle, { backgroundColor: color }]} />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      {/* Button container */}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>
+          Add to Cart
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -65,22 +101,55 @@ const styles = StyleSheet.create({
   sizeText: {
     marginHorizontal: 20,
   },
-  sizeContainer:{
-    marginVertical:20,
+  sizeContainer: {
+    marginVertical: 10,
     marginHorizontal: 20,
-    flexDirection:"row",
+    flexDirection: "row",
   },
-  sizeValueContainre:{
-    width:40,
-    height:40,
+  sizeValueContainre: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  sizeValue: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  colorText: {
+    marginHorizontal: 20,
+  },
+  colorContainer: {
+    flexDirection: "row",
+    marginHorizontal: 20,
+    marginTop:5
+  },
+  circle: {
+    height: 34,
+    width: 34,
+    borderRadius: 18,
+  },
+  circleBorder: {
+    height: 44,
+    width: 44,
+    borderRadius: 24,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "#E96E6E",
+    padding: 10,
+    margin: 10,
+    marginVertical:20,
     borderRadius:20,
-    backgroundColor:"#fff",
-    justifyContent:"center",
-    alignItems:"center",
-    marginHorizontal:10,
   },
-  sizeValue:{
-    fontSize:18,
-    fontWeight:"600",
+  buttonText: {
+    fontSize: 24,
+    fontWeight: "600",
+    color: "#fff",
+    textAlign:"center"
   }
 });

@@ -5,25 +5,32 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Category from "../components/Category";
 import ProductCard from "../components/ProductCard";
+import data from "../data/data.json";
 
 const categoryData = ["Trending Now", "All", "New", "Men", "Women", "Kids"];
 const HomeScreen = () => {
+  const [product, setProduct] = useState(data.products);
   const [selectedCateg, setSelectedCateg] = useState(null);
   const insets = useSafeAreaInsets();
-  const [isLiked, setIsLiked] = useState(false)
+
+  const handleLiked = (item) => {
+    const newProduct = product.map((prod) => {
+      if (prod.id === item.id) {
+        return { ...prod, isLiked:!prod.isLiked}
+      }
+      return prod;
+    })
+    setProduct(newProduct);
+  }
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <Header />
 
       {/* Product  List */}
-      {/* <View style={{ flexDirection: "row" }}>
-        <ProductCard />
-        <ProductCard />
-      </View> */}
       <FlatList
-        data={[1, 2, 3, 4, 5, 6]}
+        data={product}
         renderItem={({ item, index }) => (
-          <ProductCard item={item} isLiked={isLiked} setIsLiked={setIsLiked} />
+          <ProductCard item={item} handleLiked={handleLiked} />
         )}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom:50}}
