@@ -6,7 +6,7 @@ const image = "https://res.cloudinary.com/dlc5c1ycl/image/upload/v1710567612/vy2
 const CartCard = () => {
   return (
 	  <View>
-		  <Image source={{uri:image}}/>
+		  <Image source={{uri:image}} width={20} height={20}/>
 	  <Text>CartCard</Text>
 	</View>
   );
