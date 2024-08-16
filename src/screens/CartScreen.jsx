@@ -4,14 +4,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import CartCard from "../components/CartCard";
 
-
 const CartScreen = () => {
   const insets = useSafeAreaInsets();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-		  <Header isCart={true} />
-		  <CartCard/>
+      <View style={styles.headerContainer}>
+        <Header isCart={true} />
+      </View>
+      <CartCard />
     </View>
   );
 };
@@ -23,4 +24,7 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#f0e2e2",
   },
+  headerContainer: {
+    marginBottom:20
+  }
 });
