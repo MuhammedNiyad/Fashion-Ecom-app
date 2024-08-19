@@ -11,6 +11,8 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ProductDetails from "./src/screens/ProductDetails";
 import CartScreen from "./src/screens/CartScreen";
+import { CartContext, CartProvider } from "./src/context/CartContext";
+import { useContext } from 'react';
 
 const Hello = () => {
   return (
@@ -38,6 +40,7 @@ const MyHomeStack = () =>{
 
 export default function App() {
   return (
+    <CartProvider>
     <SafeAreaProvider>
       <NavigationContainer>
         <Tab.Navigator
@@ -73,12 +76,33 @@ export default function App() {
             component={CartScreen}
             options={{
               tabBarIcon: ({ size, focused, color }) => {
+                const {carts} = useContext(CartContext);
                 return (
+                  <View style={{position:"relative"}}>
                   <MaterialCommunityIcons
                     name={"cart"}
                     size={size}
                     color={color}
-                  />
+                    />
+                    <View style={{
+                      height:14,
+                      width:14,
+                      borderRadius:7,
+                      backgroundColor:color,
+                      position:"absolute",
+                      top:-10,
+                      right:-5,
+                      justifyContent:"center",
+                      alignItems:"center",
+                    }}>
+                      <Text style={{
+                        fontSize:10,
+                        color:"white",
+                        fontWeight:"500",
+                        textAlign:"center",
+                      }} >{carts.length}</Text>
+                    </View>
+                    </View>
                 );
               },
             }}
@@ -95,6 +119,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
+    </CartProvider>
   );
 }
 

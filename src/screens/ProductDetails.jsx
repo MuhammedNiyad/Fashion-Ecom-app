@@ -1,7 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
+import React, { useContext,useState } from "react";
 import Header from "../components/Header";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { CartContext } from "../context/CartContext";
 
 const sizes = ["S", "M", "L", "XL",];
 const colors = [
@@ -14,10 +15,20 @@ const colors = [
 ];
 
 const ProductDetails = () => {
+  const navigation = useNavigation();
+  const {addToCart} = useContext(CartContext);
   const itemData = useRoute().params.item;
   
-  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("S");
   const [selectedColor, setSelectedColor] = useState(colors[0]);
+
+  const handleAddToCart = (item) => {
+    item.size = selectedSize;
+    item.color = selectedColor;
+    addToCart(item);
+    navigation.navigate("CART");
+    }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -60,7 +71,7 @@ const ProductDetails = () => {
         })}
       </View>
       {/* Button container */}
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={()=>handleAddToCart(itemData)}>
         <Text style={styles.buttonText}>
           Add to Cart
         </Text>
