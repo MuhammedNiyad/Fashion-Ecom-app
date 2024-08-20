@@ -47,6 +47,7 @@ const HomeScreen = () => {
             {/* category section */}
             <FlatList
               data={categoryData}
+              keyExtractor={(item) => item.id}
               renderItem={({ item }) => (
                 <Category
                   item={item}
@@ -54,7 +55,6 @@ const HomeScreen = () => {
                   setSelectedCateg={setSelectedCateg}
                 />
               )}
-              keyExtractor={(item) => item}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />

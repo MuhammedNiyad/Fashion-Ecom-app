@@ -8,7 +8,7 @@ import { CartContext } from "../context/CartContext";
 const CartScreen = () => {
   const insets = useSafeAreaInsets();
 
-  const {carts} = useContext(CartContext);
+  const {carts, totalPrice, deleteCartItem} = useContext(CartContext);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -17,13 +17,14 @@ const CartScreen = () => {
       </View>
       <FlatList 
         data={carts}
-        renderItem={({ item }) => <CartCard item={item} />}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <CartCard item={item} deleteCartItem={deleteCartItem} />}
         ListFooterComponent={
           <>
           <View style={styles.priceContainer}>
             <View style={styles.priceAndTitle}>
               <Text style={styles.text}>Total:</Text>
-              <Text style={styles.text}>$37.9</Text>
+              <Text style={styles.text}>${totalPrice}</Text>
             </View>
             <View style={styles.priceAndTitle}>
               <Text style={styles.text}>Shipping:</Text>
@@ -33,7 +34,7 @@ const CartScreen = () => {
           <View style={styles.divider} />
       <View style={styles.priceAndTitle}>
         <Text style={styles.text}>Grand Total:</Text>
-        <Text style={[styles.text, { color: "black", fontWeight: "700" }]}>$199.5</Text>
+        <Text style={[styles.text, { color: "black", fontWeight: "700" }]}>${totalPrice}</Text>
       </View>
           </>
         }

@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native"; 
 import React from "react";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
-const CartCard = ({item}) => {  
+const CartCard = ({item, deleteCartItem}) => {  
 
   return (
     <View style={styles.container}>
@@ -17,7 +17,7 @@ const CartCard = ({item}) => {
           </View>
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => deleteCartItem(item)}>
         <FontAwesome6 name="trash" color={"#F68CB5"} size={25} />
       </TouchableOpacity>
     </View>

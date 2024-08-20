@@ -49,7 +49,7 @@ export default function App() {
             tabBarShowLabel: false,
             tabBarActiveTintColor: "#E96E6E",
           }}
-          initialRouteName="CART"
+          initialRouteName="HOME STACK"
         >
           <Tab.Screen
             name="HOME STACK"

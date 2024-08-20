@@ -5,6 +5,7 @@ export const CartContext =  createContext()
 
 export const CartProvider = ({children})=>{
     const [ carts, setCarts] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
       loadCartItem();
@@ -13,6 +14,7 @@ export const CartProvider = ({children})=>{
     const loadCartItem = async ()=>{
         const datas = await AsyncStorage.getItem("carts");
         setCarts(JSON.parse(datas) || []);
+        totalSum(carts);
     }
     
     const addToCart = async (item)=>{
@@ -21,12 +23,27 @@ export const CartProvider = ({children})=>{
             const newCartItem = [...carts, item];
             await AsyncStorage.setItem("carts", JSON.stringify(newCartItem));
             setCarts(newCartItem);
+            totalSum(newCartItem);
         }
+    }
+
+    const totalSum = (carts)=>{
+        const totalSum = carts.reduce((amount, item)=> amount + item.price, 0);
+        setTotalPrice(totalSum);
+    }
+
+    const deleteCartItem = async (item)=>{
+        const newItem = carts.filter((cart)=> cart.id !== item.id);
+        setCarts(newItem);
+        totalSum(newItem);
+        await AsyncStorage.setItem("carts", JSON.stringify(newItem));
     }
 
     const value = {
         carts,
-        addToCart
+        addToCart,
+        totalPrice,
+        deleteCartItem
     };
     return (<CartContext.Provider value={value}>{children}</CartContext.Provider>)
 }
